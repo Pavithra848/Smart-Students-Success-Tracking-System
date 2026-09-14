@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Mark Sheet</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #eaf4ff;
+            color: #123;
+        }
+
+        /* FULL PAGE */
+        .page {
+            width: 100%;
+            min-height: 100vh;
+            background: #eaf4ff;
+        }
+
+        /* TOP HEADER */
+        .top-header {
+            width: 100%;
+            background: linear-gradient(135deg, #005bea, #007bff);
+            color: white;
+            padding: 24px 35px;
+            box-shadow: 0 4px 15px rgba(0, 70, 160, 0.20);
+        }
+
+        .top-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .top-header p {
+            font-size: 15px;
+            opacity: 0.95;
+            line-height: 1.5;
+        }
+
+        /* MAIN CONTENT - FULL WIDTH */
+        .main-content {
+            width: 100%;
+            padding: 25px 30px 40px;
+        }
+
+        /* STUDENT INFORMATION */
+        .student-info {
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            padding: 20px 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 12px rgba(0, 70, 150, 0.10);
+            border-left: 5px solid #007bff;
+        }
+
+        .student-info-title {
+            color: #005bea;
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .info-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+        }
+
+        .info-box {
+            background: #f3f8ff;
+            border: 1px solid #d8e9ff;
+            border-radius: 8px;
+            padding: 12px 15px;
+            min-width: 0;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #607d9b;
+            margin-bottom: 5px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            font-size: 15px;
+            color: #123d68;
+            font-weight: 700;
+            word-break: break-word;
+        }
+
+        /* MARK CARD */
+        .marks-card {
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 3px 12px rgba(0, 70, 150, 0.10);
+            overflow-x: auto;
+        }
+
+        .marks-title {
+            color: #005bea;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* MARK TABLE */
+        .marks-table {
+            width: 100%;
+            min-width: 1100px;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .marks-table th,
+        .marks-table td {
+            border: 1px solid #b8d5f5;
+            text-align: center;
+            padding: 12px 8px;
+        }
+
+        .marks-table th {
+            background: #006ee6;
+            color: white;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .marks-table td {
+            background: #ffffff;
+        }
+
+        .marks-table tr:nth-child(2) td {
+            background: #f7fbff;
+        }
+
+        /* ROW LABEL */
+        .row-label {
+            width: 110px !important;
+            background: #e7f2ff !important;
+            color: #005bea !important;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* SUBJECT INPUT */
+        .subject-input {
+            width: 100%;
+            height: 42px;
+            border: 1px solid #aac9eb;
+            border-radius: 6px;
+            padding: 8px 5px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: #123d68;
+            background: white;
+            outline: none;
+        }
+
+        .subject-input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.12);
+        }
+
+        /* MARK INPUT */
+        .mark-input {
+            width: 100%;
+            height: 42px;
+            border: 1px solid #aac9eb;
+            border-radius: 6px;
+            padding: 8px 5px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 700;
+            color: #123d68;
+            background: white;
+            outline: none;
+        }
+
+        .mark-input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.12);
+        }
+
+        /* REMOVE NUMBER ARROWS */
+        .mark-input::-webkit-outer-spin-button,
+        .mark-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .mark-input[type="number"] {
+            appearance: textfield;
+        }
+
+        /* SUMMARY */
+        .summary-section {
+            width: 100%;
+            margin-top: 22px;
+        }
+
+        .summary-title {
+            color: #005bea;
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .summary-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .summary-box {
+            background: #f3f8ff;
+            border: 1px solid #cfe3fb;
+            border-radius: 9px;
+            padding: 16px;
+            text-align: center;
+            min-width: 0;
+        }
+
+        .summary-label {
+            color: #607d9b;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+        .summary-value {
+            color: #005bea;
+            font-size: 21px;
+            font-weight: 700;
+            word-break: break-word;
+        }
+
+        /* BUTTON AREA */
+        .button-area {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            min-width: 160px;
+            border: none;
+            border-radius: 8px;
+            padding: 13px 25px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: 0.2s ease;
+        }
+
+        .btn-save {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-save:hover {
+            background: #005bea;
+        }
+
+        .btn-print {
+            background: #123d68;
+            color: white;
+        }
+
+        .btn-print:hover {
+            background: #0b2d4d;
+        }
+
+        .btn-back {
+            background: #e1edf9;
+            color: #12456f;
+        }
+
+        .btn-back:hover {
+            background: #cfe2f7;
+        }
+
+        /* FOOTER */
+        .footer {
+            width: 100%;
+            text-align: center;
+            padding: 18px;
+            color: #6a849e;
+            font-size: 13px;
+        }
+
+        /* =========================
+           PRINT DESIGN
+           ========================= */
+
+        @media print {
+
+            @page {
+                size: landscape;
+                margin: 10mm;
+            }
+
+            html,
+            body {
+                width: 100%;
+                background: white !important;
+                overflow: visible;
+            }
+
+            .page {
+                width: 100%;
+                min-height: auto;
+                background: white !important;
+            }
+
+            .top-header {
+                background: white !important;
+                color: black !important;
+                box-shadow: none;
+                border-bottom: 2px solid black;
+                padding: 10px;
+            }
+
+            .top-header h1 {
+                color: black !important;
+                font-size: 22px;
+            }
+
+            .top-header p {
+                color: black !important;
+            }
+
+            .main-content {
+                width: 100%;
+                padding: 10px 0;
+            }
+
+            .student-info,
+            .marks-card {
+                width: 100%;
+                box-shadow: none;
+                border: 1px solid #333;
+                border-radius: 0;
+            }
+
+            .marks-card {
+                overflow: visible;
+            }
+
+            .table-wrapper {
+                overflow: visible;
+            }
+
+            .marks-table {
+                width: 100%;
+                min-width: 0;
+            }
+
+            .marks-table th {
+                background: #ddd !important;
+                color: black !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .row-label {
+                background: #eee !important;
+                color: black !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .subject-input,
+            .mark-input {
+                border: none;
+                height: auto;
+                background: transparent;
+                color: black;
+                font-size: 12px;
+            }
+
+            .summary-box {
+                border: 1px solid #333;
+                background: white;
+            }
+
+            .button-area,
+            .footer {
+                display: none !important;
+            }
+        }
+
+        /* =========================
+           RESPONSIVE
+           ========================= */
+
+        @media (max-width: 1100px) {
+
+            .info-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .top-header {
+                padding: 22px 25px;
+            }
+        }
+
+        @media (max-width: 800px) {
+
+            .top-header {
+                padding: 20px;
+            }
+
+            .top-header h1 {
+                font-size: 24px;
+            }
+
+            .top-header p {
+                font-size: 14px;
+            }
+
+            .main-content {
+                padding: 15px;
+            }
+
+            .student-info {
+                padding: 17px;
+            }
+
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .marks-card {
+                padding: 15px;
+            }
+
+            .marks-title {
+                font-size: 19px;
+            }
+
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .button-area {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+                min-width: 0;
+                min-height: 46px;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .top-header {
+                padding: 18px 15px;
+            }
+
+            .top-header h1 {
+                font-size: 21px;
+            }
+
+            .top-header p {
+                font-size: 13px;
+            }
+
+            .main-content {
+                padding: 12px;
+            }
+
+            .student-info {
+                padding: 15px;
+                border-left-width: 4px;
+            }
+
+            .student-info-title {
+                font-size: 18px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .info-box {
+                padding: 11px 13px;
+            }
+
+            .info-value {
+                font-size: 14px;
+            }
+
+            .marks-card {
+                padding: 12px;
+            }
+
+            .marks-title {
+                font-size: 18px;
+                margin-bottom: 14px;
+            }
+
+            /*
+             * Table remains horizontally scrollable
+             * because there are 10 subjects.
+             */
+            .table-wrapper {
+                width: 100%;
+                overflow-x: auto;
+            }
+
+            .marks-table {
+                min-width: 1100px;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-box {
+                padding: 14px;
+            }
+
+            .summary-value {
+                font-size: 20px;
+            }
+
+            .footer {
+                font-size: 12px;
+                padding: 15px 10px;
+            }
+        }
+
+        @media (max-width: 400px) {
+
+            .top-header {
+                padding: 16px 12px;
+            }
+
+            .top-header h1 {
+                font-size: 19px;
+            }
+
+            .top-header p {
+                font-size: 12px;
+            }
+
+            .main-content {
+                padding: 10px;
+            }
+
+            .student-info {
+                padding: 13px;
+                border-radius: 10px;
+            }
+
+            .student-info-title {
+                font-size: 17px;
+            }
+
+            .info-box {
+                padding: 10px 12px;
+            }
+
+            .info-label {
+                font-size: 11px;
+            }
+
+            .info-value {
+                font-size: 13px;
+            }
+
+            .marks-card {
+                padding: 10px;
+                border-radius: 10px;
+            }
+
+            .marks-title {
+                font-size: 17px;
+            }
+
+            .summary-title {
+                font-size: 17px;
+            }
+
+            .btn {
+                font-size: 14px;
+                padding: 12px 18px;
+            }
+        }
+
+        @media (max-width: 320px) {
+
+            .top-header {
+                padding: 14px 10px;
+            }
+
+            .top-header h1 {
+                font-size: 18px;
+            }
+
+            .main-content {
+                padding: 8px;
+            }
+
+            .student-info {
+                padding: 11px;
+            }
+
+            .student-info-title {
+                font-size: 16px;
+            }
+
+            .marks-card {
+                padding: 8px;
+            }
+
+            .marks-title {
+                font-size: 16px;
+            }
+
+            .summary-box {
+                padding: 12px;
+            }
+
+            .summary-value {
+                font-size: 18px;
+            }
+
+            .btn {
+                min-height: 44px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- HEADER -->
+    <div class="top-header">
+        <h1>Student Mark Sheet</h1>
+        <p>Smart Students Success Tracking System</p>
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+        <!-- STUDENT INFORMATION -->
+        <div class="student-info">
+
+            <div class="student-info-title">
+                Student Information
+            </div>
+
+            <div class="info-grid">
+
+                <div class="info-box">
+                    <div class="info-label">Register Number</div>
+                    <div class="info-value">
+                        {{ student.register_number }}
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">Student Name</div>
+                    <div class="info-value">
+                        {{ student.name }}
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">Department</div>
+                    <div class="info-value">
+                        {{ student.department }}
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">Year</div>
+                    <div class="info-value">
+                        {{ student.year }}
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-label">Section</div>
+                    <div class="info-value">
+                        {% if student.section %}
+                            {{ student.section }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- MARKS -->
+        <div class="marks-card">
+
+            <div class="marks-title">
+                Marks Details
+            </div>
+
+            <form method="POST"
+                  action="{{ url_for('save_student_marks') }}">
+
+                <!-- HIDDEN STUDENT DETAILS -->
+
+                <input type="hidden"
+                       name="register_number"
+                       value="{{ student.register_number }}">
+
+                <input type="hidden"
+                       name="student_name"
+                       value="{{ student.name }}">
+
+                <input type="hidden"
+                       name="department"
+                       value="{{ student.department }}">
+
+                <input type="hidden"
+                       name="year"
+                       value="{{ student.year }}">
+
+                <input type="hidden"
+                       name="section"
+                       value="{{ student.section }}">
+
+                <input type="hidden"
+                       name="class_name"
+                       value="{{ student.class_name }}">
+
+
+                <div class="table-wrapper">
+
+                    <table class="marks-table">
+
+                        <thead>
+                            <tr>
+
+                                <th class="row-label">
+                                    Details
+                                </th>
+
+                                <th>
+                                    Subject 1
+                                </th>
+
+                                <th>
+                                    Subject 2
+                                </th>
+
+                                <th>
+                                    Subject 3
+                                </th>
+
+                                <th>
+                                    Subject 4
+                                </th>
+
+                                <th>
+                                    Subject 5
+                                </th>
+
+                                <th>
+                                    Subject 6
+                                </th>
+
+                                <th>
+                                    Subject 7
+                                </th>
+
+                                <th>
+                                    Subject 8
+                                </th>
+
+                                <th>
+                                    Subject 9
+                                </th>
+
+                                <th>
+                                    Subject 10
+                                </th>
+
+                            </tr>
+                        </thead>
+
+
+                        <tbody>
+
+                            <!-- SUBJECT ROW -->
+
+                            <tr>
+
+                                <td class="row-label">
+                                    Subject
+                                </td>
+
+                                {% for i in range(10) %}
+
+                                <td>
+
+                                    <input
+                                        type="text"
+                                        name="subject[]"
+                                        class="subject-input"
+                                        placeholder="Enter Subject"
+                                        value="{% if saved_marks and saved_marks|length > i %}{{ saved_marks[i].subject }}{% endif %}"
+                                    >
+
+                                </td>
+
+                                {% endfor %}
+
+                            </tr>
+
+
+                            <!-- MARK ROW -->
+
+                            <tr>
+
+                                <td class="row-label">
+                                    Mark
+                                </td>
+
+                                {% for i in range(10) %}
+
+                                <td>
+
+                                    <input
+                                        type="number"
+                                        name="mark[]"
+                                        class="mark-input"
+                                        min="0"
+                                        max="100"
+                                        step="0.01"
+                                        placeholder="0"
+                                        value="{% if saved_marks and saved_marks|length > i %}{{ saved_marks[i].mark }}{% endif %}"
+                                    >
+
+                                </td>
+
+                                {% endfor %}
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- SUMMARY -->
+
+                <div class="summary-section">
+
+                    <div class="summary-title">
+                        Mark Summary
+                    </div>
+
+                    <div class="summary-grid">
+
+                        <div class="summary-box">
+                            <div class="summary-label">
+                                Total
+                            </div>
+
+                            <div class="summary-value"
+                                 id="totalMark">
+                                0
+                            </div>
+                        </div>
+
+
+                        <div class="summary-box">
+                            <div class="summary-label">
+                                Average
+                            </div>
+
+                            <div class="summary-value"
+                                 id="averageMark">
+                                0
+                            </div>
+                        </div>
+
+
+                        <div class="summary-box">
+                            <div class="summary-label">
+                                Grade
+                            </div>
+
+                            <div class="summary-value"
+                                 id="gradeMark">
+                                -
+                            </div>
+                        </div>
+
+
+                        <div class="summary-box">
+                            <div class="summary-label">
+                                Result
+                            </div>
+
+                            <div class="summary-value"
+                                 id="resultMark">
+                                -
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="button-area">
+
+                    <button type="submit"
+                            class="btn btn-save">
+                        Save Marks
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-print"
+                            onclick="window.print()">
+                        Print Mark Sheet
+                    </button>
+
+                    <a href="{{ url_for('marks') }}"
+                       class="btn btn-back">
+                        Back
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer">
+        Smart Students Success Tracking System
+    </div>
+
+</div>
+
+
+<script>
+
+    function calculateSummary() {
+
+        const markInputs =
+            document.querySelectorAll(".mark-input");
+
+        let total = 0;
+        let count = 0;
+        let failed = false;
+
+        markInputs.forEach(function(input) {
+
+            const value = parseFloat(input.value);
+
+            if (!isNaN(value)) {
+
+                total += value;
+                count++;
+
+                if (value < 40) {
+                    failed = true;
+                }
+
+            }
+
+        });
+
+
+        let average = 0;
+
+        if (count > 0) {
+            average = total / count;
+        }
+
+
+        let grade = "-";
+
+        if (count > 0) {
+
+            if (average >= 90) {
+                grade = "A+";
+            }
+            else if (average >= 80) {
+                grade = "A";
+            }
+            else if (average >= 70) {
+                grade = "B+";
+            }
+            else if (average >= 60) {
+                grade = "B";
+            }
+            else if (average >= 50) {
+                grade = "C";
+            }
+            else if (average >= 40) {
+                grade = "D";
+            }
+            else {
+                grade = "F";
+            }
+
+        }
+
+
+        let result = "-";
+
+        if (count > 0) {
+
+            if (failed) {
+                result = "FAIL";
+            }
+            else {
+                result = "PASS";
+            }
+
+        }
+
+
+        document.getElementById("totalMark").textContent =
+            total.toFixed(2);
+
+        document.getElementById("averageMark").textContent =
+            average.toFixed(2);
+
+        document.getElementById("gradeMark").textContent =
+            grade;
+
+        document.getElementById("resultMark").textContent =
+            result;
+    }
+
+
+    /* UPDATE SUMMARY WHEN MARK CHANGES */
+
+    document.querySelectorAll(".mark-input")
+        .forEach(function(input) {
+
+            input.addEventListener(
+                "input",
+                calculateSummary
+            );
+
+        });
+
+
+    /* INITIAL CALCULATION */
+
+    calculateSummary();
+
+</script>
+
+</body>
+</html>

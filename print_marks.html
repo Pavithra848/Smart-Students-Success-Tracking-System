@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Print Mark Sheet</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 30px;
+            overflow-x: hidden;
+        }
+
+        .marksheet {
+            width: 900px;
+            max-width: 100%;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border: 1px solid #ddd;
+        }
+
+        .college-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .college-header h1 {
+            margin: 0;
+            color: #0b5ed7;
+            font-size: 26px;
+        }
+
+        .college-header h2 {
+            margin: 8px 0;
+            font-size: 20px;
+        }
+
+        .college-header p {
+            margin: 4px 0;
+            color: #555;
+        }
+
+        .student-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 25px;
+            border: 1px solid #ddd;
+            padding: 15px;
+        }
+
+        .info-item {
+            font-size: 15px;
+        }
+
+        .info-item strong {
+            display: inline-block;
+            width: 140px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th,
+        td {
+            border: 1px solid #333;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background: #e8f1ff;
+            font-weight: bold;
+        }
+
+        td.subject {
+            text-align: left;
+        }
+
+        .summary {
+            margin-top: 25px;
+            width: 100%;
+        }
+
+        .summary td {
+            font-weight: bold;
+        }
+
+        .print-buttons {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 12px 25px;
+            margin: 5px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .print-btn {
+            background: #0d6efd;
+            color: white;
+        }
+
+        .back-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        .date {
+            text-align: right;
+            margin-top: 25px;
+        }
+
+
+        /* =========================
+           TABLET RESPONSIVE
+           ========================= */
+
+        @media (max-width: 900px) {
+
+            body {
+                padding: 20px;
+            }
+
+            .marksheet {
+                padding: 25px;
+            }
+
+            .college-header h1 {
+                font-size: 24px;
+            }
+
+            .student-info {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        /* =========================
+           MOBILE RESPONSIVE
+           ========================= */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 12px;
+            }
+
+            .marksheet {
+                width: 100%;
+                padding: 18px;
+                border-radius: 8px;
+            }
+
+            .college-header {
+                margin-bottom: 20px;
+            }
+
+            .college-header h1 {
+                font-size: 20px;
+                line-height: 1.35;
+            }
+
+            .college-header h2 {
+                font-size: 18px;
+                margin: 7px 0;
+            }
+
+            .college-header p {
+                font-size: 14px;
+                line-height: 1.4;
+            }
+
+            .student-info {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                padding: 13px;
+                margin-bottom: 20px;
+            }
+
+            .info-item {
+                font-size: 14px;
+                line-height: 1.5;
+                word-break: break-word;
+            }
+
+            .info-item strong {
+                display: block;
+                width: auto;
+                margin-bottom: 2px;
+            }
+
+            .table-wrap {
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            table {
+                min-width: 600px;
+            }
+
+            th,
+            td {
+                padding: 10px 8px;
+                font-size: 13px;
+            }
+
+            .summary {
+                min-width: 100%;
+            }
+
+            .summary td {
+                font-size: 14px;
+            }
+
+            .date {
+                text-align: center;
+                font-size: 13px;
+                line-height: 1.5;
+                margin-top: 20px;
+            }
+
+            .print-buttons {
+                margin-top: 22px;
+            }
+
+            button {
+                width: 100%;
+                margin: 5px 0;
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+
+        }
+
+
+        /* =========================
+           SMALL MOBILE
+           ========================= */
+
+        @media (max-width: 400px) {
+
+            body {
+                padding: 8px;
+            }
+
+            .marksheet {
+                padding: 14px;
+            }
+
+            .college-header h1 {
+                font-size: 18px;
+            }
+
+            .college-header h2 {
+                font-size: 16px;
+            }
+
+            .college-header p {
+                font-size: 13px;
+            }
+
+            .student-info {
+                padding: 11px;
+            }
+
+            .info-item {
+                font-size: 13px;
+            }
+
+            th,
+            td {
+                padding: 9px 7px;
+                font-size: 12px;
+            }
+
+            .summary td {
+                font-size: 13px;
+            }
+
+            .date {
+                font-size: 12px;
+            }
+
+            button {
+                font-size: 13px;
+            }
+
+        }
+
+
+        /* =========================
+           VERY SMALL MOBILE
+           ========================= */
+
+        @media (max-width: 320px) {
+
+            body {
+                padding: 5px;
+            }
+
+            .marksheet {
+                padding: 11px;
+            }
+
+            .college-header h1 {
+                font-size: 17px;
+            }
+
+            .college-header h2 {
+                font-size: 15px;
+            }
+
+            .college-header p {
+                font-size: 12px;
+            }
+
+            .student-info {
+                padding: 9px;
+            }
+
+            .info-item {
+                font-size: 12px;
+            }
+
+            button {
+                font-size: 12px;
+                padding: 11px 10px;
+            }
+
+        }
+
+
+        /* =========================
+           PRINT
+           ========================= */
+
+        @media print {
+
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .marksheet {
+                width: 100%;
+                border: none;
+                padding: 10px;
+            }
+
+            .print-buttons {
+                display: none;
+            }
+
+            @page {
+                size: A4;
+                margin: 15mm;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="marksheet">
+
+    <!-- COLLEGE HEADER -->
+
+    <div class="college-header">
+
+        <h1>SMART STUDENTS SUCCESS TRACKING SYSTEM</h1>
+
+        <h2>STUDENT MARK SHEET</h2>
+
+        <p>Academic Performance Report</p>
+
+    </div>
+
+
+    <!-- STUDENT DETAILS -->
+
+    <div class="student-info">
+
+        <div class="info-item">
+            <strong>Register Number:</strong>
+            {{ marks_data["register_number"] }}
+        </div>
+
+        <div class="info-item">
+            <strong>Student Name:</strong>
+            {{ marks_data["student_name"] }}
+        </div>
+
+        <div class="info-item">
+            <strong>Class:</strong>
+            {{ marks_data["class_name"] }}
+        </div>
+
+        <div class="info-item">
+            <strong>Date:</strong>
+            {{ marks_data["updated_at"] }}
+        </div>
+
+    </div>
+
+
+    <!-- SUBJECT MARKS -->
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>S.No</th>
+                <th>Subject</th>
+                <th>Mark</th>
+                <th>Maximum Mark</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for item in subjects %}
+
+            <tr>
+
+                <td>
+                    {{ loop.index }}
+                </td>
+
+                <td class="subject">
+                    {{ item["subject"] }}
+                </td>
+
+                <td>
+                    {% if item["mark"] is not none %}
+                        {{ item["mark"] }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+
+                <td>
+                    100
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+
+    <!-- RESULT SUMMARY -->
+
+    <table class="summary">
+
+        <tr>
+
+            <td>Total</td>
+
+            <td>
+                {{ marks_data["total"] }}
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>Average</td>
+
+            <td>
+                {{ marks_data["average"] }}
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>Result</td>
+
+            <td>
+                {{ marks_data["result"] }}
+            </td>
+
+        </tr>
+
+    </table>
+
+
+    <div class="date">
+        Generated from Smart Students Success Tracking System
+    </div>
+
+
+    <!-- BUTTONS -->
+
+    <div class="print-buttons">
+
+        <button
+            class="print-btn"
+            onclick="window.print()">
+            🖨️ Print Mark Sheet
+        </button>
+
+        <button
+            class="back-btn"
+            onclick="history.back()">
+            ← Back
+        </button>
+
+    </div>
+
+</div>
+
+</body>
+</html>

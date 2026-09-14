@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Attendance</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #eaf3ff;
+            min-height: 100vh;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: #1565c0;
+            color: white;
+            padding: 20px 30px;
+            font-size: 25px;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        .container {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.10);
+            width: 100%;
+        }
+
+        h2 {
+            color: #1565c0;
+            margin-bottom: 25px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            min-width: 0;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        select,
+        input[type="date"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #b8c7d9;
+            border-radius: 8px;
+            background: white;
+            font-size: 15px;
+            color: #222;
+            min-width: 0;
+        }
+
+        select:focus,
+        input[type="date"]:focus {
+            outline: none;
+            border: 2px solid #1565c0;
+        }
+
+        .buttons {
+            margin-top: 10px;
+            display: flex;
+            gap: 12px;
+        }
+
+        button,
+        .reset-btn {
+            background: #1565c0;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        button:hover {
+            background: #0d47a1;
+        }
+
+        .reset-btn {
+            background: #607d8b;
+        }
+
+        .reset-btn:hover {
+            background: #455a64;
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        .student-section {
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            table-layout: auto;
+        }
+
+        th {
+            background: #1565c0;
+            color: white;
+            padding: 13px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background: #f5f9ff;
+        }
+
+        .status-select {
+            width: 130px;
+        }
+
+        .save-btn {
+            margin-top: 20px;
+            background: #2e7d32;
+        }
+
+        .save-btn:hover {
+            background: #1b5e20;
+        }
+
+        .empty {
+            margin-top: 25px;
+            padding: 20px;
+            background: #fff3cd;
+            color: #856404;
+            border-radius: 8px;
+        }
+
+
+        /* =====================================================
+           TABLET RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1000px) {
+
+            .form-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+
+        /* =====================================================
+           MOBILE RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 650px) {
+
+            .header {
+                padding: 18px 15px;
+                font-size: 20px;
+                line-height: 1.4;
+            }
+
+            .container {
+                padding: 12px;
+            }
+
+            .card {
+                padding: 18px 14px;
+                border-radius: 10px;
+            }
+
+            h2 {
+                font-size: 21px;
+                margin-bottom: 20px;
+                line-height: 1.3;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .form-group {
+                width: 100%;
+            }
+
+            label {
+                font-size: 14px;
+            }
+
+            select,
+            input[type="date"] {
+                width: 100%;
+                font-size: 14px;
+                padding: 12px;
+            }
+
+            .buttons {
+                flex-direction: column;
+                width: 100%;
+                gap: 10px;
+            }
+
+            button,
+            .reset-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .student-section {
+                margin-top: 25px;
+            }
+
+            .student-section h2 {
+                font-size: 20px;
+            }
+
+            table {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                white-space: nowrap;
+                font-size: 13px;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            th,
+            td {
+                padding: 10px;
+            }
+
+            .status-select {
+                width: 120px;
+                min-width: 120px;
+            }
+
+            .save-btn {
+                width: 100%;
+                margin-top: 18px;
+            }
+
+            .message {
+                font-size: 14px;
+                line-height: 1.4;
+            }
+
+            .empty {
+                font-size: 14px;
+                line-height: 1.5;
+            }
+
+        }
+
+
+        /* =====================================================
+           SMALL MOBILE
+        ===================================================== */
+
+        @media (max-width: 400px) {
+
+            .header {
+                padding: 16px 12px;
+                font-size: 18px;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            .card {
+                padding: 16px 11px;
+            }
+
+            h2 {
+                font-size: 19px;
+            }
+
+            label {
+                font-size: 13px;
+            }
+
+            select,
+            input[type="date"] {
+                font-size: 13px;
+                padding: 11px;
+            }
+
+            button,
+            .reset-btn {
+                font-size: 14px;
+                padding: 11px 15px;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th,
+            td {
+                padding: 9px;
+            }
+
+            .status-select {
+                width: 110px;
+                min-width: 110px;
+                font-size: 12px;
+            }
+
+            .empty {
+                padding: 16px;
+            }
+
+        }
+
+
+        /* =====================================================
+           VERY SMALL MOBILE
+        ===================================================== */
+
+        @media (max-width: 320px) {
+
+            .header {
+                font-size: 17px;
+            }
+
+            .card {
+                padding: 14px 9px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            .container {
+                padding: 8px;
+            }
+
+            table {
+                font-size: 11px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="header">
+        Smart Students Success Tracking System
+    </div>
+
+    <div class="container">
+
+        <div class="card">
+
+            <h2>
+                Attendance Management
+            </h2>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% if messages %}
+
+                    {% for category, message in messages %}
+
+                        <div class="message">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            {% endwith %}
+
+
+            <!-- ATTENDANCE SELECTION -->
+
+            <form method="GET" action="{{ url_for('attendance') }}">
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>
+                            Department
+                        </label>
+
+                        <select name="department" required>
+
+                            <option value="">
+                                Select Department
+                            </option>
+
+                            <option value="BCA">
+                                BCA
+                            </option>
+
+                            <option value="IT">
+                                IT
+                            </option>
+
+                            <option value="CS">
+                                CS
+                            </option>
+
+                            <option value="MCA">
+                                MCA
+                            </option>
+
+                            <option value="MSc CS">
+                                MSc CS
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Year
+                        </label>
+
+                        <select name="year" required>
+
+                            <option value="">
+                                Select Year
+                            </option>
+
+                            <option value="I Year">
+                                I Year
+                            </option>
+
+                            <option value="II Year">
+                                II Year
+                            </option>
+
+                            <option value="III Year">
+                                III Year
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Section
+                        </label>
+
+                        <select name="section">
+
+                            <option value="">
+                                No Section
+                            </option>
+
+                            <option value="A">
+                                Section A
+                            </option>
+
+                            <option value="B">
+                                Section B
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Class
+                        </label>
+
+                        <select name="class_name" required>
+
+                            <option value="">
+                                Select Class
+                            </option>
+
+                            <option value="I BCA">
+                                I BCA
+                            </option>
+
+                            <option value="II BCA">
+                                II BCA
+                            </option>
+
+                            <option value="III BCA">
+                                III BCA
+                            </option>
+
+                            <option value="I IT">
+                                I IT
+                            </option>
+
+                            <option value="II IT">
+                                II IT
+                            </option>
+
+                            <option value="III IT">
+                                III IT
+                            </option>
+
+                            <option value="I CS">
+                                I CS
+                            </option>
+
+                            <option value="II CS">
+                                II CS
+                            </option>
+
+                            <option value="III CS A">
+                                III CS Section A
+                            </option>
+
+                            <option value="III CS B">
+                                III CS Section B
+                            </option>
+
+                            <option value="I MCA">
+                                I MCA
+                            </option>
+
+                            <option value="II MSc CS">
+                                II MSc CS
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Attendance Date
+                        </label>
+
+                        <input
+                            type="date"
+                            name="date"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="buttons">
+
+                    <button type="submit">
+                        View Students
+                    </button>
+
+                    <a
+                        href="{{ url_for('attendance') }}"
+                        class="reset-btn"
+                    >
+                        Reset
+                    </a>
+
+                </div>
+
+            </form>
+
+
+            <!-- STUDENT LIST -->
+
+            {% if selected_class %}
+
+                <div class="student-section">
+
+                    <h2>
+                        {{ selected_class }} - Attendance
+                    </h2>
+
+
+                    {% if students %}
+
+                        <form
+                            method="POST"
+                            action="{{ url_for('attendance') }}"
+                        >
+
+                            <input
+                                type="hidden"
+                                name="class_name"
+                                value="{{ selected_class }}"
+                            >
+
+                            <input
+                                type="hidden"
+                                name="attendance_date"
+                                value="{{ attendance_date }}"
+                            >
+
+
+                            <table>
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>
+                                            S.No
+                                        </th>
+
+                                        <th>
+                                            Register Number
+                                        </th>
+
+                                        <th>
+                                            Student Name
+                                        </th>
+
+                                        <th>
+                                            Status
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody>
+
+                                    {% for student in students %}
+
+                                        <tr>
+
+                                            <td>
+                                                {{ loop.index }}
+                                            </td>
+
+                                            <td>
+                                                {{ student.register_number }}
+                                            </td>
+
+                                            <td>
+                                                {{ student.name }}
+                                            </td>
+
+                                            <td>
+
+                                                <select
+                                                    class="status-select"
+                                                    name="status_{{ student.register_number }}"
+                                                >
+
+                                                    <option value="Present">
+                                                        Present
+                                                    </option>
+
+                                                    <option value="Absent">
+                                                        Absent
+                                                    </option>
+
+                                                </select>
+
+                                            </td>
+
+                                        </tr>
+
+                                    {% endfor %}
+
+                                </tbody>
+
+                            </table>
+
+
+                            <button
+                                type="submit"
+                                class="save-btn"
+                            >
+                                Save Attendance
+                            </button>
+
+                        </form>
+
+                    {% else %}
+
+                        <div class="empty">
+                            No students found for this class.
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Marks - Smart Students Success Tracking System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #eaf3ff;
+            color: #123b6d;
+            overflow-x: hidden;
+        }
+
+        .page {
+            width: 100%;
+            min-height: 100vh;
+            background: #eaf3ff;
+        }
+
+        .header {
+            width: 100%;
+            background: linear-gradient(135deg, #075ba8, #0d73d5);
+            color: white;
+            text-align: center;
+            padding: 42px 25px 38px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .header p {
+            margin: 18px 0 0;
+            font-size: 18px;
+        }
+
+        .main {
+            width: 100%;
+            margin: 0;
+            padding: 28px 30px 60px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: #075ba8;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 22px;
+            transition: 0.2s ease;
+        }
+
+        .back-btn:hover {
+            background: #064c8c;
+        }
+
+        .card {
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            padding: 34px 30px;
+            box-shadow: 0 5px 20px rgba(25, 75, 130, 0.12);
+            margin-bottom: 26px;
+        }
+
+        .card h2 {
+            margin: 0 0 25px;
+            font-size: 27px;
+            color: #075ba8;
+        }
+
+        .form-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .form-group {
+            width: 100%;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 9px;
+            font-weight: 700;
+            font-size: 17px;
+            color: #174875;
+        }
+
+        select {
+            width: 100%;
+            height: 49px;
+            padding: 0 14px;
+            border: 1px solid #bdd0e6;
+            border-radius: 8px;
+            background: white;
+            color: #111;
+            font-size: 16px;
+            outline: none;
+        }
+
+        select:focus {
+            border-color: #0d67b5;
+            box-shadow: 0 0 0 3px rgba(13, 103, 181, 0.12);
+        }
+
+        .section-group {
+            display: none;
+        }
+
+        .button-row {
+            margin-top: 24px;
+        }
+
+        .view-btn {
+            border: none;
+            background: #075fac;
+            color: white;
+            padding: 13px 28px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .view-btn:hover {
+            background: #064e8e;
+        }
+
+        .students-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .students-title h2 {
+            margin-bottom: 0;
+        }
+
+        .selected-info {
+            color: #536f91;
+            font-size: 15px;
+            font-weight: 600;
+            background: #edf6ff;
+            padding: 9px 14px;
+            border-radius: 7px;
+        }
+
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 22px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 760px;
+        }
+
+        th {
+            background: #075fac;
+            color: white;
+            text-align: left;
+            padding: 15px;
+            border: 1px solid #075fac;
+            font-size: 15px;
+        }
+
+        td {
+            padding: 14px 15px;
+            border-bottom: 1px solid #e4edf7;
+            color: #263f5c;
+            border-left: 1px solid #e4edf7;
+            border-right: 1px solid #e4edf7;
+        }
+
+        tbody tr:nth-child(even) td {
+            background: #f7fbff;
+        }
+
+        tbody tr:hover td {
+            background: #edf6ff;
+        }
+
+        .name {
+            font-weight: 700;
+        }
+
+        .marks-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: #075fac;
+            color: white;
+            padding: 9px 15px;
+            border-radius: 7px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .marks-btn:hover {
+            background: #064e8e;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 55px 20px;
+            color: #6c7f96;
+            font-size: 16px;
+        }
+
+        .empty strong {
+            color: #075ba8;
+        }
+
+        /* =========================
+           TABLET
+           ========================= */
+
+        @media (max-width: 900px) {
+
+            .main {
+                padding: 22px 20px 50px;
+            }
+
+            .card {
+                padding: 28px 22px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 32px;
+            }
+        }
+
+        /* =========================
+           MOBILE
+           ========================= */
+
+        @media (max-width: 700px) {
+
+            .header {
+                padding: 30px 15px;
+            }
+
+            .header h1 {
+                font-size: 27px;
+                line-height: 1.3;
+            }
+
+            .header p {
+                font-size: 16px;
+                margin-top: 14px;
+            }
+
+            .main {
+                padding: 18px 14px 45px;
+            }
+
+            .card {
+                padding: 25px 18px;
+                border-radius: 12px;
+            }
+
+            .card h2 {
+                font-size: 23px;
+                line-height: 1.3;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .form-group label {
+                font-size: 16px;
+            }
+
+            select {
+                height: 48px;
+                font-size: 16px;
+            }
+
+            .button-row {
+                margin-top: 20px;
+            }
+
+            .view-btn {
+                width: 100%;
+                padding: 13px 20px;
+            }
+
+            .back-btn {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 18px;
+            }
+
+            .students-title {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .students-title h2 {
+                width: 100%;
+            }
+
+            .selected-info {
+                width: 100%;
+                font-size: 14px;
+                line-height: 1.5;
+            }
+
+            .table-wrap {
+                margin-top: 18px;
+                width: 100%;
+            }
+
+            table {
+                min-width: 760px;
+            }
+
+            th {
+                padding: 13px;
+                font-size: 14px;
+            }
+
+            td {
+                padding: 12px 13px;
+                font-size: 14px;
+            }
+
+            .marks-btn {
+                padding: 9px 13px;
+                font-size: 13px;
+            }
+
+            .empty {
+                padding: 45px 15px;
+                line-height: 1.6;
+            }
+        }
+
+        /* =========================
+           SMALL MOBILE
+           ========================= */
+
+        @media (max-width: 480px) {
+
+            .header {
+                padding: 25px 12px 27px;
+            }
+
+            .header h1 {
+                font-size: 23px;
+            }
+
+            .header p {
+                font-size: 15px;
+                margin-top: 11px;
+            }
+
+            .main {
+                padding: 15px 10px 35px;
+            }
+
+            .back-btn {
+                font-size: 15px;
+                padding: 11px 15px;
+            }
+
+            .card {
+                padding: 21px 14px;
+                margin-bottom: 18px;
+            }
+
+            .card h2 {
+                font-size: 21px;
+                margin-bottom: 20px;
+            }
+
+            .form-grid {
+                gap: 16px;
+            }
+
+            .form-group label {
+                font-size: 15px;
+                margin-bottom: 7px;
+            }
+
+            select {
+                height: 46px;
+                padding: 0 11px;
+                font-size: 15px;
+            }
+
+            .view-btn {
+                font-size: 15px;
+                padding: 12px 15px;
+            }
+
+            .selected-info {
+                font-size: 13px;
+                padding: 8px 11px;
+            }
+
+            .table-wrap {
+                margin-top: 15px;
+            }
+
+            .empty {
+                font-size: 14px;
+                padding: 35px 10px;
+            }
+        }
+
+        /* =========================
+           VERY SMALL MOBILE
+           ========================= */
+
+        @media (max-width: 360px) {
+
+            .header h1 {
+                font-size: 21px;
+            }
+
+            .header p {
+                font-size: 14px;
+            }
+
+            .main {
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+
+            .card {
+                padding: 18px 12px;
+            }
+
+            .card h2 {
+                font-size: 19px;
+            }
+
+            .back-btn {
+                font-size: 14px;
+                padding: 10px 12px;
+            }
+
+            select {
+                height: 44px;
+                font-size: 14px;
+            }
+
+            .view-btn {
+                font-size: 14px;
+            }
+
+            .selected-info {
+                font-size: 12px;
+            }
+        }
+
+        /* =========================
+           EXTRA SMALL DEVICES
+           ========================= */
+
+        @media (max-width: 320px) {
+
+            .header h1 {
+                font-size: 19px;
+            }
+
+            .header p {
+                font-size: 13px;
+            }
+
+            .main {
+                padding-left: 6px;
+                padding-right: 6px;
+            }
+
+            .card {
+                padding: 16px 10px;
+            }
+
+            .card h2 {
+                font-size: 18px;
+            }
+
+            .form-group label {
+                font-size: 14px;
+            }
+
+            select {
+                font-size: 13px;
+            }
+
+            .view-btn,
+            .back-btn {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="header">
+        <h1>Smart Students Success Tracking System</h1>
+        <p>Marks</p>
+    </div>
+
+    <main class="main">
+
+        <a href="{{ url_for('dashboard') }}" class="back-btn">
+            ← Back to Dashboard
+        </a>
+
+        <div class="card">
+
+            <h2>Select Class</h2>
+
+            <form method="GET" action="{{ url_for('marks') }}">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label for="department">
+                            Department
+                        </label>
+
+                        <select
+                            name="department"
+                            id="department"
+                            required
+                        >
+
+                            <option value="">
+                                Select Department
+                            </option>
+
+                            <option
+                                value="BCA"
+                                {% if selected_department == "BCA" %}selected{% endif %}
+                            >
+                                BCA
+                            </option>
+
+                            <option
+                                value="IT"
+                                {% if selected_department == "IT" %}selected{% endif %}
+                            >
+                                IT
+                            </option>
+
+                            <option
+                                value="CS"
+                                {% if selected_department == "CS" %}selected{% endif %}
+                            >
+                                CS
+                            </option>
+
+                            <option
+                                value="MCA"
+                                {% if selected_department == "MCA" %}selected{% endif %}
+                            >
+                                MCA
+                            </option>
+
+                            <option
+                                value="MSc CS"
+                                {% if selected_department == "MSc CS" %}selected{% endif %}
+                            >
+                                MSc CS
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="year">
+                            Year
+                        </label>
+
+                        <select
+                            name="year"
+                            id="year"
+                            required
+                        >
+
+                            <option value="">
+                                Select Year
+                            </option>
+
+                            <option
+                                value="I Year"
+                                {% if selected_year == "I Year" %}selected{% endif %}
+                            >
+                                I Year
+                            </option>
+
+                            <option
+                                value="II Year"
+                                {% if selected_year == "II Year" %}selected{% endif %}
+                            >
+                                II Year
+                            </option>
+
+                            <option
+                                value="III Year"
+                                {% if selected_year == "III Year" %}selected{% endif %}
+                            >
+                                III Year
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div
+                        class="form-group section-group"
+                        id="sectionGroup"
+                    >
+
+                        <label for="section">
+                            Section
+                        </label>
+
+                        <select
+                            name="section"
+                            id="section"
+                        >
+
+                            <option value="">
+                                Select Section
+                            </option>
+
+                            <option
+                                value="A"
+                                {% if selected_section == "A" %}selected{% endif %}
+                            >
+                                Section A
+                            </option>
+
+                            <option
+                                value="B"
+                                {% if selected_section == "B" %}selected{% endif %}
+                            >
+                                Section B
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="button-row">
+
+                    <button
+                        type="submit"
+                        class="view-btn"
+                    >
+                        View Students
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="students-title">
+
+                <h2>Students</h2>
+
+                {% if selected_department and selected_year %}
+
+                    <div class="selected-info">
+
+                        {{ selected_department }}
+                        -
+                        {{ selected_year }}
+
+                        {% if selected_section %}
+                            -
+                            Section {{ selected_section }}
+                        {% endif %}
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            {% if students %}
+
+                <div class="table-wrap">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>#</th>
+                                <th>Register Number</th>
+                                <th>Student Name</th>
+                                <th>Marks</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for student in students %}
+
+                                <tr>
+
+                                    <td>
+                                        {{ loop.index }}
+                                    </td>
+
+                                    <td>
+                                        <strong>
+                                            {{ student.register_number }}
+                                        </strong>
+                                    </td>
+
+                                    <td class="name">
+                                        {{ student.name }}
+                                    </td>
+
+                                    <td>
+
+                                        <a
+                                            class="marks-btn"
+                                            href="{{ url_for(
+                                                'student_marks',
+                                                register_number=student.register_number,
+                                                department=selected_department,
+                                                year=selected_year,
+                                                section=selected_section
+                                            ) }}"
+                                        >
+                                            View / Edit Marks
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <div class="empty">
+
+                    {% if selected_department and selected_year %}
+
+                        <strong>
+                            No students found.
+                        </strong>
+
+                        <br><br>
+
+                        Please check the selected
+                        Department, Year and Section.
+
+                    {% else %}
+
+                        Select Department and Year,
+                        then click
+                        <strong>
+                            View Students
+                        </strong>.
+
+                    {% endif %}
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    function updateSection() {
+
+        const department =
+            document.getElementById("department").value;
+
+        const year =
+            document.getElementById("year").value;
+
+        const sectionGroup =
+            document.getElementById("sectionGroup");
+
+        const section =
+            document.getElementById("section");
+
+
+        if (
+            department === "CS" &&
+            year === "III Year"
+        ) {
+
+            sectionGroup.style.display = "block";
+
+        } else {
+
+            sectionGroup.style.display = "none";
+            section.value = "";
+
+        }
+
+    }
+
+
+    document
+        .getElementById("department")
+        .addEventListener(
+            "change",
+            updateSection
+        );
+
+
+    document
+        .getElementById("year")
+        .addEventListener(
+            "change",
+            updateSection
+        );
+
+
+    updateSection();
+
+</script>
+
+</body>
+</html>

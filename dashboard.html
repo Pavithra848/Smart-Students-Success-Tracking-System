@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - Smart Students</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f8fafc;
+            color: #172554;
+            overflow-x: hidden;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            width: 260px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+
+            background: #0f2a52;
+
+            padding: 28px 16px;
+
+            box-shadow: 4px 0 20px rgba(15, 42, 82, 0.12);
+
+            overflow-y: auto;
+        }
+
+        .logo {
+            text-align: center;
+            color: white;
+
+            font-size: 25px;
+            font-weight: 700;
+
+            padding: 18px 10px;
+            margin-bottom: 28px;
+
+            letter-spacing: 0.3px;
+        }
+
+        /* =========================
+           MENU
+        ========================= */
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            text-decoration: none;
+            color: #e2e8f0;
+
+            padding: 14px 16px;
+            margin-bottom: 7px;
+
+            border-radius: 10px;
+
+            font-size: 16px;
+            font-weight: 500;
+
+            transition: all 0.25s ease;
+        }
+
+        .menu-item:hover {
+            background: #1d4ed8;
+            color: white;
+
+            transform: translateX(3px);
+        }
+
+        .menu-item.active {
+            background: #2563eb;
+            color: white;
+
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.25);
+        }
+
+        .menu-item:last-child {
+            margin-top: 20px;
+        }
+
+        /* =========================
+           MAIN CONTENT
+        ========================= */
+
+        .main-content {
+            margin-left: 260px;
+
+            min-height: 100vh;
+
+            padding: 45px;
+        }
+
+        /* =========================
+           TOP HEADER
+        ========================= */
+
+        .top-header {
+            margin-bottom: 30px;
+        }
+
+        .top-header h1 {
+            font-size: 32px;
+
+            color: #0f2a52;
+
+            margin-bottom: 8px;
+        }
+
+        .top-header p {
+            color: #64748b;
+
+            font-size: 16px;
+        }
+
+        /* =========================
+           WELCOME CARD
+        ========================= */
+
+        .welcome {
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 30px 32px;
+
+            margin-bottom: 28px;
+
+            border: 1px solid #e2e8f0;
+
+            box-shadow: 0 5px 20px rgba(15, 42, 82, 0.06);
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .welcome::before {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            top: 0;
+
+            width: 5px;
+            height: 100%;
+
+            background: #2563eb;
+        }
+
+        .welcome h2 {
+            font-size: 25px;
+
+            color: #0f2a52;
+
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            font-size: 16px;
+
+            color: #64748b;
+        }
+
+        /* =========================
+           DASHBOARD CARDS
+        ========================= */
+
+        .dashboard-grid {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 22px;
+        }
+
+        .student-card {
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            border: 1px solid #e2e8f0;
+
+            box-shadow: 0 5px 20px rgba(15, 42, 82, 0.06);
+
+            transition: all 0.25s ease;
+        }
+
+        .student-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow: 0 12px 28px rgba(15, 42, 82, 0.10);
+        }
+
+        .card-top {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            color: #64748b;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+
+            border-radius: 12px;
+
+            background: #eff6ff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 23px;
+        }
+
+        .student-count {
+            font-size: 44px;
+
+            font-weight: 700;
+
+            color: #0f2a52;
+
+            line-height: 1;
+        }
+
+        .card-description {
+            margin-top: 12px;
+
+            color: #94a3b8;
+
+            font-size: 14px;
+        }
+
+        /* =========================
+           QUICK INFORMATION
+        ========================= */
+
+        .info-section {
+            margin-top: 28px;
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            border: 1px solid #e2e8f0;
+
+            box-shadow: 0 5px 20px rgba(15, 42, 82, 0.06);
+        }
+
+        .info-section h3 {
+            color: #0f2a52;
+
+            font-size: 20px;
+
+            margin-bottom: 20px;
+        }
+
+        .info-items {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .info-item {
+            padding: 18px;
+
+            border-radius: 12px;
+
+            background: #f8fafc;
+
+            border: 1px solid #e2e8f0;
+        }
+
+        .info-item strong {
+            display: block;
+
+            color: #0f2a52;
+
+            font-size: 15px;
+
+            margin-bottom: 6px;
+        }
+
+        .info-item span {
+            color: #64748b;
+
+            font-size: 14px;
+        }
+
+        /* =========================
+           MOBILE RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1000px) {
+
+            .main-content {
+                padding: 30px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .info-items {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 768px) {
+
+            .sidebar {
+                width: 100%;
+
+                height: auto;
+
+                position: relative;
+
+                padding: 15px;
+
+                overflow-y: visible;
+            }
+
+            .logo {
+                font-size: 23px;
+
+                margin-bottom: 15px;
+
+                padding: 12px 8px;
+            }
+
+            .menu-item {
+                display: inline-flex;
+
+                margin: 4px;
+
+                padding: 11px 13px;
+
+                font-size: 14px;
+
+                max-width: 100%;
+            }
+
+            .menu-item:last-child {
+                margin-top: 4px;
+            }
+
+            .main-content {
+                margin-left: 0;
+
+                padding: 22px;
+
+                width: 100%;
+            }
+
+            .top-header h1 {
+                font-size: 27px;
+            }
+
+            .top-header p {
+                font-size: 15px;
+            }
+
+            .welcome {
+                padding: 25px;
+            }
+
+            .welcome h2 {
+                font-size: 22px;
+            }
+
+            .welcome p {
+                font-size: 15px;
+                line-height: 1.5;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-items {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 480px) {
+
+            .sidebar {
+                padding: 12px;
+            }
+
+            .logo {
+                font-size: 21px;
+            }
+
+            .menu-item {
+                font-size: 13px;
+
+                padding: 10px 11px;
+
+                gap: 8px;
+            }
+
+            .main-content {
+                padding: 16px;
+            }
+
+            .top-header {
+                margin-bottom: 22px;
+            }
+
+            .top-header h1 {
+                font-size: 24px;
+            }
+
+            .top-header p {
+                font-size: 14px;
+            }
+
+            .welcome {
+                padding: 22px 20px;
+
+                border-radius: 14px;
+            }
+
+            .welcome h2 {
+                font-size: 20px;
+            }
+
+            .welcome p {
+                font-size: 14px;
+            }
+
+            .student-card {
+                padding: 23px;
+
+                border-radius: 15px;
+            }
+
+            .student-count {
+                font-size: 38px;
+            }
+
+            .card-title {
+                font-size: 14px;
+            }
+
+            .card-description {
+                font-size: 13px;
+            }
+
+            .info-section {
+                padding: 22px 18px;
+
+                border-radius: 15px;
+            }
+
+            .info-section h3 {
+                font-size: 18px;
+            }
+
+            .info-item {
+                padding: 16px;
+            }
+
+        }
+
+        @media (max-width: 360px) {
+
+            .menu-item {
+                font-size: 12px;
+
+                padding: 9px 10px;
+
+                gap: 6px;
+            }
+
+            .main-content {
+                padding: 12px;
+            }
+
+            .top-header h1 {
+                font-size: 22px;
+            }
+
+            .welcome {
+                padding: 19px 17px;
+            }
+
+            .welcome h2 {
+                font-size: 18px;
+            }
+
+            .student-card {
+                padding: 20px;
+            }
+
+            .student-count {
+                font-size: 34px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+            Smart Students
+        </div>
+
+        <!-- DASHBOARD -->
+        <a href="{{ url_for('dashboard') }}"
+           class="menu-item active">
+
+            🏠
+            <span>Dashboard</span>
+
+        </a>
+
+        <!-- STUDENTS DETAILS -->
+        <a href="{{ url_for('students') }}"
+           class="menu-item">
+
+            👨‍🎓
+            <span>Students Details</span>
+
+        </a>
+
+        <!-- ATTENDANCE -->
+        <a href="{{ url_for('attendance') }}"
+           class="menu-item">
+
+            ✓
+            <span>Attendance</span>
+
+        </a>
+
+        <!-- MARKS -->
+        <a href="{{ url_for('marks') }}"
+           class="menu-item">
+
+            📊
+            <span>Marks</span>
+
+        </a>
+
+        <!-- ACADEMIC ACHIEVEMENT -->
+        <!-- IMPORTANT: endpoint is achievement -->
+        <a href="{{ url_for('achievement') }}"
+           class="menu-item">
+
+            🏆
+            <span>Academic Achievement</span>
+
+        </a>
+
+        <!-- REPORTS -->
+        <a href="{{ url_for('reports') }}"
+           class="menu-item">
+
+            📈
+            <span>Reports</span>
+
+        </a>
+
+        <!-- SETTINGS -->
+        <a href="{{ url_for('settings') }}"
+           class="menu-item">
+
+            ⚙️
+            <span>Settings</span>
+
+        </a>
+
+        <!-- LOGOUT -->
+        <a href="{{ url_for('logout') }}"
+           class="menu-item">
+
+            🚪
+            <span>Logout</span>
+
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <div class="main-content">
+
+        <!-- HEADER -->
+
+        <div class="top-header">
+
+            <h1>Dashboard</h1>
+
+            <p>
+                Smart Students Success Tracking System
+            </p>
+
+        </div>
+
+
+        <!-- WELCOME -->
+
+        <div class="welcome">
+
+            <h2>
+                Welcome to Smart Students 👋
+            </h2>
+
+            <p>
+                Manage student performance, attendance,
+                marks and academic achievements in one place.
+            </p>
+
+        </div>
+
+
+        <!-- DASHBOARD CARDS -->
+
+        <div class="dashboard-grid">
+
+            <!-- TOTAL STUDENTS -->
+
+            <div class="student-card">
+
+                <div class="card-top">
+
+                    <div class="card-title">
+                        Total Students
+                    </div>
+
+                    <div class="card-icon">
+                        👨‍🎓
+                    </div>
+
+                </div>
+
+                <div class="student-count">
+                    {{ total_students }}
+                </div>
+
+                <div class="card-description">
+                    Students currently registered
+                </div>
+
+            </div>
+
+
+            <!-- TOTAL CLASSES -->
+
+            <div class="student-card">
+
+                <div class="card-top">
+
+                    <div class="card-title">
+                        Total Classes
+                    </div>
+
+                    <div class="card-icon">
+                        🏫
+                    </div>
+
+                </div>
+
+                <div class="student-count">
+                    12
+                </div>
+
+                <div class="card-description">
+                    Active classes
+                </div>
+
+            </div>
+
+
+            <!-- ACADEMIC -->
+
+            <div class="student-card">
+
+                <div class="card-top">
+
+                    <div class="card-title">
+                        Academic
+                    </div>
+
+                    <div class="card-icon">
+                        🏆
+                    </div>
+
+                </div>
+
+                <div class="student-count">
+                    ✓
+                </div>
+
+                <div class="card-description">
+                    Achievement tracking
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- QUICK INFORMATION -->
+
+        <div class="info-section">
+
+            <h3>
+                Quick Information
+            </h3>
+
+            <div class="info-items">
+
+                <div class="info-item">
+
+                    <strong>
+                        📊 Marks
+                    </strong>
+
+                    <span>
+                        View and manage student marks
+                    </span>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <strong>
+                        ✓ Attendance
+                    </strong>
+
+                    <span>
+                        Track student attendance
+                    </span>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <strong>
+                        📈 Reports
+                    </strong>
+
+                    <span>
+                        Generate student performance reports
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

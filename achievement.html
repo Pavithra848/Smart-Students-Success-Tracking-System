@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Academic Achievement</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #eef5ff;
+            min-height: 100vh;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        .top-header {
+            background: linear-gradient(135deg, #0756c9, #0b78e3);
+            color: white;
+            padding: 22px 35px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .top-header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .top-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .container {
+            width: 100%;
+            max-width: none;
+            margin: 30px 0;
+            padding: 0 25px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: white;
+            color: #0756c9;
+            padding: 11px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            border: 1px solid #d5e3f7;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .back-btn:hover {
+            background: #0756c9;
+            color: white;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 5px 25px rgba(30, 64, 175, 0.12);
+            margin-bottom: 25px;
+        }
+
+        .card-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #0756c9;
+            margin-bottom: 25px;
+            border-left: 5px solid #0756c9;
+            padding-left: 12px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+
+        select,
+        input,
+        textarea {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            background: white;
+            font-size: 15px;
+            color: #1e293b;
+            outline: none;
+        }
+
+        select:focus,
+        input:focus,
+        textarea:focus {
+            border-color: #0b78e3;
+            box-shadow: 0 0 0 3px rgba(11, 120, 227, 0.12);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .student-box {
+            margin-top: 25px;
+            background: #f0f7ff;
+            border: 1px solid #cfe2ff;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .student-box h3 {
+            color: #0756c9;
+            margin-bottom: 15px;
+        }
+
+        .student-details {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .detail {
+            background: white;
+            border-radius: 9px;
+            padding: 13px;
+            border: 1px solid #dbeafe;
+            min-width: 0;
+        }
+
+        .detail span {
+            display: block;
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 5px;
+        }
+
+        .detail strong {
+            font-size: 14px;
+            color: #1e293b;
+            word-break: break-word;
+        }
+
+        .achievement-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .achievement-header h2 {
+            color: #0756c9;
+            font-size: 21px;
+        }
+
+        .add-btn {
+            background: linear-gradient(135deg, #0756c9, #0b78e3);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 9px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .add-btn:hover {
+            opacity: 0.9;
+        }
+
+        .achievement-form {
+            display: none;
+            background: #f8fbff;
+            border: 1px solid #cfe2ff;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .achievement-form.show {
+            display: block;
+        }
+
+        .form-title {
+            color: #0756c9;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, #0756c9, #0b78e3);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .cancel-btn {
+            background: #64748b;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .achievement-card {
+            border: 1px solid #dbeafe;
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            min-width: 0;
+        }
+
+        .achievement-image {
+            width: 100%;
+            height: 190px;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .achievement-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .no-image {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .achievement-content {
+            padding: 18px;
+        }
+
+        .achievement-content h3 {
+            color: #0756c9;
+            font-size: 18px;
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+
+        .achievement-content p {
+            color: #475569;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 6px;
+            word-break: break-word;
+        }
+
+        .achievement-badge {
+            display: inline-block;
+            background: #e0efff;
+            color: #0756c9;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .delete-btn {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 8px 13px;
+            background: #ef4444;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .empty-box {
+            text-align: center;
+            padding: 45px 20px;
+            background: #f8fbff;
+            border: 1px dashed #b8cce6;
+            border-radius: 12px;
+            color: #64748b;
+        }
+
+        .empty-box h3 {
+            color: #0756c9;
+            margin-bottom: 8px;
+        }
+
+        .flash {
+            padding: 13px 17px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background: #e0f2fe;
+            color: #075985;
+            border: 1px solid #bae6fd;
+        }
+
+        .required {
+            color: #ef4444;
+        }
+
+
+        /* =====================================================
+           TABLET RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 900px) {
+
+            .achievement-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .student-details {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-grid {
+                gap: 18px;
+            }
+        }
+
+
+        /* =====================================================
+           MOBILE RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 650px) {
+
+            .top-header {
+                padding: 20px 15px;
+            }
+
+            .top-header h1 {
+                font-size: 23px;
+                line-height: 1.3;
+            }
+
+            .top-header p {
+                font-size: 13px;
+                line-height: 1.5;
+            }
+
+            .container {
+                width: 100%;
+                margin: 20px 0;
+                padding: 0 12px;
+            }
+
+            .back-btn {
+                padding: 10px 16px;
+                font-size: 14px;
+                margin-bottom: 18px;
+            }
+
+            .card {
+                padding: 20px 15px;
+                border-radius: 13px;
+                margin-bottom: 18px;
+            }
+
+            .card-title {
+                font-size: 19px;
+                margin-bottom: 20px;
+                padding-left: 10px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 17px;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            label {
+                font-size: 13px;
+            }
+
+            select,
+            input,
+            textarea {
+                font-size: 14px;
+                padding: 12px;
+            }
+
+            textarea {
+                min-height: 110px;
+            }
+
+            .student-box {
+                padding: 15px;
+                margin-top: 20px;
+            }
+
+            .student-box h3 {
+                font-size: 18px;
+            }
+
+            .student-details {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .achievement-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .achievement-header h2 {
+                font-size: 19px;
+            }
+
+            .add-btn {
+                width: 100%;
+                padding: 12px;
+            }
+
+            .achievement-form {
+                padding: 18px 14px;
+            }
+
+            .form-title {
+                font-size: 18px;
+                margin-bottom: 18px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .save-btn,
+            .cancel-btn {
+                width: 100%;
+                padding: 12px;
+            }
+
+            .achievement-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .achievement-image {
+                height: 200px;
+            }
+
+            .achievement-content {
+                padding: 15px;
+            }
+
+            .achievement-content h3 {
+                font-size: 17px;
+            }
+
+            .achievement-content p {
+                font-size: 13px;
+            }
+
+            .empty-box {
+                padding: 35px 15px;
+            }
+        }
+
+
+        /* =====================================================
+           SMALL MOBILE
+        ===================================================== */
+
+        @media (max-width: 400px) {
+
+            .top-header {
+                padding: 18px 12px;
+            }
+
+            .top-header h1 {
+                font-size: 20px;
+            }
+
+            .top-header p {
+                font-size: 12px;
+            }
+
+            .container {
+                padding: 0 9px;
+                margin: 15px 0;
+            }
+
+            .card {
+                padding: 17px 12px;
+            }
+
+            .card-title {
+                font-size: 18px;
+            }
+
+            .back-btn {
+                font-size: 13px;
+                padding: 9px 13px;
+            }
+
+            .student-box {
+                padding: 12px;
+            }
+
+            .achievement-form {
+                padding: 15px 11px;
+            }
+
+            .achievement-image {
+                height: 180px;
+            }
+
+            .achievement-content {
+                padding: 13px;
+            }
+
+            .achievement-badge {
+                font-size: 11px;
+            }
+
+            .delete-btn {
+                font-size: 12px;
+            }
+        }
+
+
+        /* =====================================================
+           VERY SMALL MOBILE
+        ===================================================== */
+
+        @media (max-width: 320px) {
+
+            .top-header h1 {
+                font-size: 18px;
+            }
+
+            .top-header p {
+                font-size: 11px;
+            }
+
+            .card {
+                padding: 15px 10px;
+            }
+
+            .card-title {
+                font-size: 17px;
+            }
+
+            .achievement-header h2 {
+                font-size: 17px;
+            }
+
+            .achievement-image {
+                height: 160px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-header">
+
+        <h1>🏆 Academic Achievement</h1>
+
+        <p>
+            Smart Students Success Tracking System
+        </p>
+
+    </div>
+
+
+    <div class="container">
+
+        <a href="{{ url_for('students') }}" class="back-btn">
+            ← Back to Students
+        </a>
+
+
+        {% with messages = get_flashed_messages() %}
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    <div class="flash">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- SELECT STUDENT -->
+
+        <div class="card">
+
+            <div class="card-title">
+                Select Student
+            </div>
+
+
+            <form method="GET" action="{{ url_for('achievement') }}">
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="department">
+                            Department
+                        </label>
+
+                        <select
+                            name="department"
+                            id="department"
+                            onchange="this.form.submit()"
+                        >
+
+                            <option value="">
+                                -- Select Department --
+                            </option>
+
+                            {% for dept in departments %}
+
+                                <option
+                                    value="{{ dept }}"
+                                    {% if selected_department == dept %}selected{% endif %}
+                                >
+                                    {{ dept }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="year">
+                            Year
+                        </label>
+
+                        <select
+                            name="year"
+                            id="year"
+                            onchange="this.form.submit()"
+                        >
+
+                            <option value="">
+                                -- Select Year --
+                            </option>
+
+                            {% for y in years %}
+
+                                <option
+                                    value="{{ y }}"
+                                    {% if selected_year == y %}selected{% endif %}
+                                >
+                                    {{ y }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="class_name">
+                            Class
+                        </label>
+
+                        <select
+                            name="class_name"
+                            id="class_name"
+                            onchange="this.form.submit()"
+                        >
+
+                            <option value="">
+                                -- Select Class --
+                            </option>
+
+                            {% for cls in classes %}
+
+                                <option
+                                    value="{{ cls }}"
+                                    {% if selected_class == cls %}selected{% endif %}
+                                >
+                                    {{ cls }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="register_number">
+                            Student
+                        </label>
+
+                        <select
+                            name="register_number"
+                            id="register_number"
+                            onchange="this.form.submit()"
+                        >
+
+                            <option value="">
+                                -- Select Student --
+                            </option>
+
+                            {% for student in students %}
+
+                                <option
+                                    value="{{ student.register_number }}"
+                                    {% if selected_register == student.register_number %}selected{% endif %}
+                                >
+                                    {{ student.register_number }} - {{ student.name }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+
+            {% if selected_student %}
+
+                <div class="student-box">
+
+                    <h3>
+                        Student Details
+                    </h3>
+
+                    <div class="student-details">
+
+                        <div class="detail">
+
+                            <span>
+                                Register Number
+                            </span>
+
+                            <strong>
+                                {{ selected_student.register_number }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <span>
+                                Name
+                            </span>
+
+                            <strong>
+                                {{ selected_student.name }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <span>
+                                Department
+                            </span>
+
+                            <strong>
+                                {{ selected_student.department }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <span>
+                                Class
+                            </span>
+
+                            <strong>
+                                {{ selected_student.class_name }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        {% if selected_student %}
+
+            <!-- ACHIEVEMENTS -->
+
+            <div class="card">
+
+                <div class="achievement-header">
+
+                    <h2>
+                        Academic Achievements
+                    </h2>
+
+                    <button
+                        type="button"
+                        class="add-btn"
+                        onclick="showAchievementForm()"
+                    >
+                        + Add Achievement
+                    </button>
+
+                </div>
+
+
+                <!-- ADD ACHIEVEMENT FORM -->
+
+                <div
+                    id="achievementForm"
+                    class="achievement-form"
+                >
+
+                    <div class="form-title">
+                        Add Academic Achievement
+                    </div>
+
+
+                    <form
+                        method="POST"
+                        action="{{ url_for('add_achievement') }}"
+                        enctype="multipart/form-data"
+                    >
+
+                        <input
+                            type="hidden"
+                            name="register_number"
+                            value="{{ selected_student.register_number }}"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="class_name"
+                            value="{{ selected_student.class_name }}"
+                        >
+
+
+                        <div class="form-grid">
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    Student
+                                </label>
+
+                                <input
+                                    type="text"
+                                    value="{{ selected_student.register_number }} - {{ selected_student.name }}"
+                                    readonly
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    Class
+                                </label>
+
+                                <input
+                                    type="text"
+                                    value="{{ selected_student.class_name }}"
+                                    readonly
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="title">
+
+                                    Achievement Title
+
+                                    <span class="required">
+                                        *
+                                    </span>
+
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="title"
+                                    name="title"
+                                    placeholder="Enter achievement title"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="achievement_type">
+                                    Achievement Type
+                                </label>
+
+                                <select
+                                    id="achievement_type"
+                                    name="achievement_type"
+                                >
+
+                                    <option value="">
+                                        -- Select Type --
+                                    </option>
+
+                                    <option value="Academic">
+                                        Academic
+                                    </option>
+
+                                    <option value="Competition">
+                                        Competition
+                                    </option>
+
+                                    <option value="Certification">
+                                        Certification
+                                    </option>
+
+                                    <option value="Project">
+                                        Project
+                                    </option>
+
+                                    <option value="Paper Presentation">
+                                        Paper Presentation
+                                    </option>
+
+                                    <option value="Seminar">
+                                        Seminar
+                                    </option>
+
+                                    <option value="Other">
+                                        Other
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group full">
+
+                                <label for="description">
+                                    Description
+                                </label>
+
+                                <textarea
+                                    id="description"
+                                    name="description"
+                                    placeholder="Enter achievement description"
+                                ></textarea>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="certificate">
+                                    Certificate
+                                </label>
+
+                                <input
+                                    type="file"
+                                    id="certificate"
+                                    name="certificate"
+                                    accept=".png,.jpg,.jpeg,.gif,.webp"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="photo">
+                                    Achievement Photo
+                                </label>
+
+                                <input
+                                    type="file"
+                                    id="photo"
+                                    name="photo"
+                                    accept=".png,.jpg,.jpeg,.gif,.webp"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-actions">
+
+                            <button
+                                type="submit"
+                                class="save-btn"
+                            >
+                                Save Achievement
+                            </button>
+
+                            <button
+                                type="button"
+                                class="cancel-btn"
+                                onclick="hideAchievementForm()"
+                            >
+                                Cancel
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+                <!-- EXISTING ACHIEVEMENTS -->
+
+                {% if achievements %}
+
+                    <div class="achievement-grid">
+
+                        {% for achievement in achievements %}
+
+                            <div class="achievement-card">
+
+                                <div class="achievement-image">
+
+                                    {% if achievement.photo %}
+
+                                        <img
+                                            src="{{ url_for(
+                                                'static',
+                                                filename='uploads/achievements/' + achievement.photo
+                                            ) }}"
+                                            alt="Achievement Photo"
+                                        >
+
+                                    {% elif achievement.certificate %}
+
+                                        <img
+                                            src="{{ url_for(
+                                                'static',
+                                                filename='uploads/achievements/' + achievement.certificate
+                                            ) }}"
+                                            alt="Achievement Certificate"
+                                        >
+
+                                    {% else %}
+
+                                        <div class="no-image">
+                                            No Image
+                                        </div>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <div class="achievement-content">
+
+                                    <h3>
+                                        {{ achievement.title }}
+                                    </h3>
+
+
+                                    {% if achievement.achievement_type %}
+
+                                        <span class="achievement-badge">
+                                            {{ achievement.achievement_type }}
+                                        </span>
+
+                                    {% endif %}
+
+
+                                    {% if achievement.description %}
+
+                                        <p>
+                                            {{ achievement.description }}
+                                        </p>
+
+                                    {% endif %}
+
+
+                                    {% if achievement.created_at %}
+
+                                        <p>
+
+                                            <strong>
+                                                Added:
+                                            </strong>
+
+                                            {{ achievement.created_at }}
+
+                                        </p>
+
+                                    {% endif %}
+
+
+                                    {% if achievement.certificate %}
+
+                                        <p>
+                                            Certificate uploaded
+                                        </p>
+
+                                    {% endif %}
+
+
+                                    <a
+                                        href="{{ url_for(
+                                            'delete_achievement',
+                                            achievement_id=achievement.id
+                                        ) }}"
+                                        class="delete-btn"
+                                        onclick="return confirm('Are you sure you want to delete this achievement?');"
+                                    >
+                                        Delete
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="empty-box">
+
+                        <h3>
+                            No Achievements Found
+                        </h3>
+
+                        <p>
+                            This student has no academic achievements yet.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <script>
+
+        function showAchievementForm() {
+
+            const form =
+                document.getElementById("achievementForm");
+
+            form.classList.add("show");
+
+            form.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        }
+
+
+        function hideAchievementForm() {
+
+            const form =
+                document.getElementById("achievementForm");
+
+            form.classList.remove("show");
+
+        }
+
+    </script>
+
+</body>
+
+</html>

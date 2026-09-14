@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>
+    Students Details - Smart Students Success Tracking System
+</title>
+
+<style>
+
+    /* =====================================================
+       RESET
+    ===================================================== */
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+
+    /* =====================================================
+       BODY
+    ===================================================== */
+
+    html {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    body {
+
+        background: #eaf4ff;
+
+        min-height: 100vh;
+
+        width: 100%;
+
+        overflow-x: hidden;
+
+    }
+
+
+    /* =====================================================
+       HEADER
+    ===================================================== */
+
+    .header {
+
+        width: 100%;
+
+        background:
+            linear-gradient(
+                135deg,
+                #0756a3,
+                #0b72d9
+            );
+
+        color: white;
+
+        padding: 28px 35px;
+
+        text-align: center;
+
+        box-shadow:
+            0 4px 15px rgba(0, 0, 0, 0.15);
+
+    }
+
+
+    .header h1 {
+
+        font-size: 30px;
+
+        font-weight: 700;
+
+        line-height: 1.3;
+
+    }
+
+
+    .header p {
+
+        margin-top: 7px;
+
+        font-size: 15px;
+
+        opacity: 0.95;
+
+    }
+
+
+    /* =====================================================
+       MAIN CONTAINER
+    ===================================================== */
+
+    .container {
+
+        width: 100%;
+
+        max-width: none;
+
+        margin: 0;
+
+        padding: 25px 35px 40px;
+
+    }
+
+
+    /* =====================================================
+       BACK BUTTON
+    ===================================================== */
+
+    .back-btn {
+
+        display: inline-block;
+
+        text-decoration: none;
+
+        background: #0756a3;
+
+        color: white;
+
+        padding: 11px 20px;
+
+        border-radius: 8px;
+
+        margin-bottom: 22px;
+
+        font-weight: bold;
+
+        font-size: 14px;
+
+        transition: 0.2s ease;
+
+    }
+
+
+    .back-btn:hover {
+
+        background: #043e78;
+
+        transform: translateY(-1px);
+
+    }
+
+
+    /* =====================================================
+       SELECTION BOX
+    ===================================================== */
+
+    .selection-box {
+
+        width: 100%;
+
+        background: white;
+
+        padding: 28px;
+
+        border-radius: 14px;
+
+        box-shadow:
+            0 5px 18px rgba(0, 0, 0, 0.08);
+
+        margin-bottom: 25px;
+
+        border: 1px solid #d9e8f7;
+
+    }
+
+
+    .selection-box h2 {
+
+        color: #0756a3;
+
+        margin-bottom: 22px;
+
+        font-size: 21px;
+
+    }
+
+
+    /* =====================================================
+       FORM ROW
+    ===================================================== */
+
+    .form-row {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+        gap: 20px;
+
+        width: 100%;
+
+    }
+
+
+    .form-group {
+
+        display: flex;
+
+        flex-direction: column;
+
+        width: 100%;
+
+        min-width: 0;
+
+    }
+
+
+    .form-group label {
+
+        font-weight: bold;
+
+        color: #174a73;
+
+        margin-bottom: 8px;
+
+        font-size: 14px;
+
+    }
+
+
+    .form-group select {
+
+        width: 100%;
+
+        padding: 13px;
+
+        border:
+            1px solid #b7cce0;
+
+        border-radius: 8px;
+
+        font-size: 14px;
+
+        background: white;
+
+        color: #222;
+
+        outline: none;
+
+        cursor: pointer;
+
+        min-height: 46px;
+
+    }
+
+
+    .form-group select:focus {
+
+        border-color: #0756a3;
+
+        box-shadow:
+            0 0 0 3px rgba(7, 86, 163, 0.10);
+
+    }
+
+
+    /* =====================================================
+       SUBMIT BUTTON
+    ===================================================== */
+
+    .submit-btn {
+
+        margin-top: 22px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #0756a3,
+                #0b72d9
+            );
+
+        color: white;
+
+        border: none;
+
+        padding: 13px 28px;
+
+        border-radius: 8px;
+
+        cursor: pointer;
+
+        font-size: 15px;
+
+        font-weight: bold;
+
+        transition: 0.2s ease;
+
+        min-height: 46px;
+
+    }
+
+
+    .submit-btn:hover {
+
+        background:
+            linear-gradient(
+                135deg,
+                #043e78,
+                #0756a3
+            );
+
+        transform: translateY(-1px);
+
+    }
+
+
+    /* =====================================================
+       STUDENT BOX
+    ===================================================== */
+
+    .student-box {
+
+        width: 100%;
+
+        background: white;
+
+        padding: 28px;
+
+        border-radius: 14px;
+
+        box-shadow:
+            0 5px 18px rgba(0, 0, 0, 0.08);
+
+        border: 1px solid #d9e8f7;
+
+        min-width: 0;
+
+    }
+
+
+    .student-box h2 {
+
+        color: #0756a3;
+
+        margin-bottom: 20px;
+
+        font-size: 21px;
+
+        display: flex;
+
+        align-items: center;
+
+        flex-wrap: wrap;
+
+        gap: 8px;
+
+        line-height: 1.4;
+
+    }
+
+
+    /* =====================================================
+       CLASS INFORMATION
+    ===================================================== */
+
+    .class-info {
+
+        background:
+            linear-gradient(
+                135deg,
+                #eaf4ff,
+                #f4f9ff
+            );
+
+        padding: 15px 18px;
+
+        border-radius: 8px;
+
+        margin-bottom: 20px;
+
+        color: #174a73;
+
+        font-weight: bold;
+
+        border:
+            1px solid #d5e7f8;
+
+        width: 100%;
+
+        line-height: 1.6;
+
+        word-break: break-word;
+
+    }
+
+
+    /* =====================================================
+       TABLE WRAPPER
+    ===================================================== */
+
+    .table-wrapper {
+
+        width: 100%;
+
+        overflow-x: auto;
+
+        overflow-y: hidden;
+
+        border:
+            1px solid #dce8f2;
+
+        border-radius: 9px;
+
+        -webkit-overflow-scrolling: touch;
+
+    }
+
+
+    /* =====================================================
+       TABLE
+    ===================================================== */
+
+    table {
+
+        width: 100%;
+
+        border-collapse: collapse;
+
+        min-width: 700px;
+
+        background: white;
+
+    }
+
+
+    /* =====================================================
+       TABLE HEADER
+    ===================================================== */
+
+    th {
+
+        background:
+            linear-gradient(
+                135deg,
+                #0756a3,
+                #0b72d9
+            );
+
+        color: white;
+
+        padding: 15px;
+
+        text-align: left;
+
+        font-size: 14px;
+
+        white-space: nowrap;
+
+    }
+
+
+    /* =====================================================
+       TABLE DATA
+    ===================================================== */
+
+    td {
+
+        padding: 14px 15px;
+
+        border-bottom:
+            1px solid #dce8f2;
+
+        color: #333;
+
+        font-size: 14px;
+
+        white-space: nowrap;
+
+    }
+
+
+    tbody tr:last-child td {
+
+        border-bottom: none;
+
+    }
+
+
+    tr:hover td {
+
+        background: #f2f8ff;
+
+    }
+
+
+    /* =====================================================
+       COUNT BOX
+    ===================================================== */
+
+    .count-box {
+
+        display: inline-block;
+
+        background:
+            linear-gradient(
+                135deg,
+                #0756a3,
+                #0b72d9
+            );
+
+        color: white;
+
+        padding: 6px 13px;
+
+        border-radius: 20px;
+
+        margin-left: 5px;
+
+        font-size: 12px;
+
+        vertical-align: middle;
+
+    }
+
+
+    /* =====================================================
+       NO STUDENTS
+    ===================================================== */
+
+    .no-students {
+
+        text-align: center;
+
+        padding: 45px 20px;
+
+        color: #777;
+
+        font-size: 16px;
+
+        background: #f8fbff;
+
+        border-radius: 8px;
+
+        line-height: 1.5;
+
+    }
+
+
+    /* =====================================================
+       RESPONSIVE - TABLET
+    ===================================================== */
+
+    @media (max-width: 900px) {
+
+        .container {
+
+            padding:
+                22px 22px 35px;
+
+        }
+
+
+        .form-row {
+
+            grid-template-columns: 1fr 1fr;
+
+        }
+
+
+        .header {
+
+            padding:
+                25px 20px;
+
+        }
+
+
+        .header h1 {
+
+            font-size: 25px;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       RESPONSIVE - MOBILE
+    ===================================================== */
+
+    @media (max-width: 650px) {
+
+        .container {
+
+            padding:
+                15px 12px 30px;
+
+        }
+
+
+        .header {
+
+            padding:
+                22px 15px;
+
+        }
+
+
+        .header h1 {
+
+            font-size: 21px;
+
+            line-height: 1.4;
+
+        }
+
+
+        .header p {
+
+            font-size: 13px;
+
+        }
+
+
+        .back-btn {
+
+            width: 100%;
+
+            text-align: center;
+
+            min-height: 44px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+
+        .selection-box {
+
+            padding: 20px 17px;
+
+            border-radius: 11px;
+
+        }
+
+
+        .student-box {
+
+            padding: 20px 17px;
+
+            border-radius: 11px;
+
+        }
+
+
+        .form-row {
+
+            grid-template-columns: 1fr;
+
+            gap: 16px;
+
+        }
+
+
+        .selection-box h2,
+
+        .student-box h2 {
+
+            font-size: 19px;
+
+        }
+
+
+        .class-info {
+
+            line-height: 1.8;
+
+        }
+
+
+        .submit-btn {
+
+            width: 100%;
+
+        }
+
+
+        .table-wrapper {
+
+            width: 100%;
+
+            overflow-x: auto;
+
+        }
+
+
+        table {
+
+            min-width: 700px;
+
+        }
+
+
+        th {
+
+            padding: 13px;
+
+            font-size: 13px;
+
+        }
+
+
+        td {
+
+            padding: 12px 13px;
+
+            font-size: 13px;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       VERY SMALL MOBILE
+    ===================================================== */
+
+    @media (max-width: 400px) {
+
+        .container {
+
+            padding:
+                12px 9px 25px;
+
+        }
+
+
+        .header {
+
+            padding: 19px 12px;
+
+        }
+
+
+        .header h1 {
+
+            font-size: 19px;
+
+        }
+
+
+        .header p {
+
+            font-size: 12px;
+
+        }
+
+
+        .selection-box,
+
+        .student-box {
+
+            padding: 17px 13px;
+
+        }
+
+
+        .selection-box h2,
+
+        .student-box h2 {
+
+            font-size: 18px;
+
+        }
+
+
+        .form-group label {
+
+            font-size: 13px;
+
+        }
+
+
+        .form-group select {
+
+            font-size: 13px;
+
+            padding: 12px;
+
+        }
+
+
+        .count-box {
+
+            margin-left: 0;
+
+        }
+
+
+        .class-info {
+
+            font-size: 13px;
+
+            padding: 12px 13px;
+
+        }
+
+
+        .no-students {
+
+            padding: 35px 15px;
+
+            font-size: 14px;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       EXTRA SMALL MOBILE
+    ===================================================== */
+
+    @media (max-width: 320px) {
+
+        .container {
+
+            padding:
+                10px 7px 22px;
+
+        }
+
+
+        .header {
+
+            padding: 17px 10px;
+
+        }
+
+
+        .header h1 {
+
+            font-size: 18px;
+
+        }
+
+
+        .selection-box,
+
+        .student-box {
+
+            padding: 15px 11px;
+
+        }
+
+
+        .selection-box h2,
+
+        .student-box h2 {
+
+            font-size: 17px;
+
+        }
+
+
+        .back-btn {
+
+            font-size: 13px;
+
+        }
+
+
+        .submit-btn {
+
+            font-size: 14px;
+
+        }
+
+
+        .class-info {
+
+            font-size: 12px;
+
+        }
+
+
+        .no-students {
+
+            font-size: 13px;
+
+        }
+
+    }
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<div class="header">
+
+    <h1>
+        Smart Students Success Tracking System
+    </h1>
+
+    <p>
+        Students Details
+    </p>
+
+</div>
+
+
+<!-- =====================================================
+     MAIN CONTAINER
+===================================================== -->
+
+<div class="container">
+
+
+    <!-- =================================================
+         BACK BUTTON
+    ================================================= -->
+
+    <a
+        href="{{ url_for('dashboard') }}"
+        class="back-btn">
+
+        ← Back to Dashboard
+
+    </a>
+
+
+    <!-- =================================================
+         CLASS SELECTION
+    ================================================= -->
+
+    <div class="selection-box">
+
+        <h2>
+            Select Class
+        </h2>
+
+
+        <form
+            method="GET"
+            action="{{ url_for('students') }}"
+        >
+
+
+            <div class="form-row">
+
+
+                <!-- =====================================
+                     DEPARTMENT
+                ====================================== -->
+
+                <div class="form-group">
+
+                    <label for="department">
+                        Department
+                    </label>
+
+                    <select
+                        id="department"
+                        name="department"
+                        onchange="loadYears()"
+                        required
+                    >
+
+                        <option value="">
+                            Select Department
+                        </option>
+
+
+                        <option
+                            value="BCA"
+                            {% if selected_department == "BCA" %}
+                            selected
+                            {% endif %}
+                        >
+                            BCA
+                        </option>
+
+
+                        <option
+                            value="IT"
+                            {% if selected_department == "IT" %}
+                            selected
+                            {% endif %}
+                        >
+                            IT
+                        </option>
+
+
+                        <option
+                            value="CS"
+                            {% if selected_department == "CS" %}
+                            selected
+                            {% endif %}
+                        >
+                            CS
+                        </option>
+
+
+                        <option
+                            value="MCA"
+                            {% if selected_department == "MCA" %}
+                            selected
+                            {% endif %}
+                        >
+                            MCA
+                        </option>
+
+
+                        <option
+                            value="MSc CS"
+                            {% if selected_department == "MSc CS" %}
+                            selected
+                            {% endif %}
+                        >
+                            MSc CS
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- =====================================
+                     YEAR
+                ====================================== -->
+
+                <div class="form-group">
+
+                    <label for="year">
+                        Year
+                    </label>
+
+                    <select
+                        id="year"
+                        name="year"
+                        onchange="loadSections()"
+                        required
+                    >
+
+                        <option value="">
+                            Select Year
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- =====================================
+                     SECTION
+                ====================================== -->
+
+                <div
+                    class="form-group"
+                    id="sectionGroup"
+                    style="display: none;"
+                >
+
+                    <label for="section">
+                        Section
+                    </label>
+
+                    <select
+                        id="section"
+                        name="section"
+                    >
+
+                        <option value="">
+                            Select Section
+                        </option>
+
+                        <option value="A">
+                            Section A
+                        </option>
+
+                        <option value="B">
+                            Section B
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =========================================
+                 VIEW STUDENTS
+            ========================================== -->
+
+            <button
+                type="submit"
+                class="submit-btn"
+            >
+
+                View Students
+
+            </button>
+
+
+        </form>
+
+    </div>
+
+
+    <!-- =================================================
+         STUDENT LIST
+    ================================================= -->
+
+    {% if selected_department and selected_year %}
+
+
+    <div class="student-box">
+
+
+        <h2>
+
+            Student List
+
+            {% if students %}
+
+                <span class="count-box">
+
+                    {{ students|length }} Students
+
+                </span>
+
+            {% endif %}
+
+        </h2>
+
+
+        <!-- =============================================
+             CLASS INFORMATION
+        ============================================== -->
+
+        <div class="class-info">
+
+            Department:
+
+            {{ selected_department }}
+
+            &nbsp;&nbsp; | &nbsp;&nbsp;
+
+            Year:
+
+            {{ selected_year }}
+
+
+            {% if selected_section %}
+
+                &nbsp;&nbsp; | &nbsp;&nbsp;
+
+                Section:
+
+                {{ selected_section }}
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =============================================
+             STUDENTS
+        ============================================== -->
+
+        {% if students %}
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                S.No
+                            </th>
+
+                            <th>
+                                Register Number
+                            </th>
+
+                            <th>
+                                Student Name
+                            </th>
+
+                            <th>
+                                Class
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for student in students %}
+
+                        <tr>
+
+                            <td>
+                                {{ loop.index }}
+                            </td>
+
+                            <td>
+                                {{ student["register_number"] }}
+                            </td>
+
+                            <td>
+                                {{ student["name"] }}
+                            </td>
+
+                            <td>
+                                {{ student["class_name"] }}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="no-students">
+
+                No students found for the selected class.
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+    const yearData = {
+
+        "BCA": [
+            "I Year",
+            "II Year",
+            "III Year"
+        ],
+
+        "IT": [
+            "I Year",
+            "II Year",
+            "III Year"
+        ],
+
+        "CS": [
+            "I Year",
+            "II Year",
+            "III Year"
+        ],
+
+        "MCA": [
+            "I Year"
+        ],
+
+        "MSc CS": [
+            "II Year"
+        ]
+
+    };
+
+
+    /* =================================================
+       LOAD YEARS
+    ================================================= */
+
+    function loadYears() {
+
+        const department =
+            document.getElementById(
+                "department"
+            ).value;
+
+
+        const yearSelect =
+            document.getElementById(
+                "year"
+            );
+
+
+        const sectionGroup =
+            document.getElementById(
+                "sectionGroup"
+            );
+
+
+        const sectionSelect =
+            document.getElementById(
+                "section"
+            );
+
+
+        yearSelect.innerHTML =
+            '<option value="">Select Year</option>';
+
+
+        sectionSelect.innerHTML =
+            '<option value="">Select Section</option>';
+
+
+        sectionGroup.style.display =
+            "none";
+
+
+        if (
+            department !== "" &&
+            yearData[department]
+        ) {
+
+            yearData[department].forEach(
+                function(year) {
+
+                    const option =
+                        document.createElement(
+                            "option"
+                        );
+
+
+                    option.value =
+                        year;
+
+
+                    option.textContent =
+                        year;
+
+
+                    yearSelect.appendChild(
+                        option
+                    );
+
+                }
+            );
+
+        }
+
+    }
+
+
+    /* =================================================
+       LOAD SECTIONS
+    ================================================= */
+
+    function loadSections() {
+
+        const department =
+            document.getElementById(
+                "department"
+            ).value;
+
+
+        const year =
+            document.getElementById(
+                "year"
+            ).value;
+
+
+        const sectionGroup =
+            document.getElementById(
+                "sectionGroup"
+            );
+
+
+        const sectionSelect =
+            document.getElementById(
+                "section"
+            );
+
+
+        if (
+            department === "CS" &&
+            year === "III Year"
+        ) {
+
+            sectionGroup.style.display =
+                "flex";
+
+
+            sectionSelect.innerHTML = `
+
+                <option value="">
+                    Select Section
+                </option>
+
+                <option value="A">
+                    Section A
+                </option>
+
+                <option value="B">
+                    Section B
+                </option>
+
+            `;
+
+        }
+
+        else {
+
+            sectionGroup.style.display =
+                "none";
+
+
+            sectionSelect.innerHTML =
+                '<option value="">Select Section</option>';
+
+        }
+
+    }
+
+
+    /* =================================================
+       PAGE LOAD
+    ================================================= */
+
+    window.addEventListener(
+        "DOMContentLoaded",
+        function() {
+
+            const department =
+                document.getElementById(
+                    "department"
+                ).value;
+
+
+            const selectedYear =
+                "{{ selected_year }}";
+
+
+            const selectedSection =
+                "{{ selected_section }}";
+
+
+            if (department !== "") {
+
+                loadYears();
+
+
+                const yearSelect =
+                    document.getElementById(
+                        "year"
+                    );
+
+
+                yearSelect.value =
+                    selectedYear;
+
+
+                loadSections();
+
+
+                const sectionSelect =
+                    document.getElementById(
+                        "section"
+                    );
+
+
+                if (
+                    selectedSection !== ""
+                ) {
+
+                    sectionSelect.value =
+                        selectedSection;
+
+                }
+
+            }
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

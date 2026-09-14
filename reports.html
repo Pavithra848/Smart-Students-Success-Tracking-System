@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Reports</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        html {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #ffffff;
+            color: #222;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding: 30px;
+        }
+
+        /* HEADER */
+
+        .header {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 25px 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+        }
+
+        .header h1 {
+            color: #0756b8;
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 10px 18px;
+            background: #0756b8;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .back-btn:hover {
+            background: #06458f;
+        }
+
+        /* SUMMARY CARDS */
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 22px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            min-width: 0;
+        }
+
+        .card h2 {
+            color: #0756b8;
+            font-size: 28px;
+            margin-bottom: 7px;
+            word-break: break-word;
+        }
+
+        .card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        /* SELECTION BOX */
+
+        .selection-box {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            width: 100%;
+        }
+
+        .selection-box h2 {
+            color: #0756b8;
+            font-size: 23px;
+            margin-bottom: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        select {
+            width: 100%;
+            max-width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            background: #ffffff;
+            color: #333;
+            font-size: 15px;
+            min-height: 46px;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #0756b8;
+            box-shadow: 0 0 0 3px rgba(7, 86, 184, 0.08);
+        }
+
+        /* STUDENT */
+
+        .student-box {
+            margin-top: 28px;
+            padding-top: 25px;
+            border-top: 1px solid #e5e7eb;
+            width: 100%;
+        }
+
+        .student-box h3 {
+            color: #0756b8;
+            font-size: 18px;
+            margin-bottom: 14px;
+        }
+
+        /* BUTTON */
+
+        .view-btn {
+            margin-top: 20px;
+            width: 100%;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            background: #0756b8;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            min-height: 48px;
+        }
+
+        .view-btn:hover {
+            background: #06458f;
+        }
+
+        /* EMPTY */
+
+        .empty {
+            margin-top: 15px;
+            padding: 18px;
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            color: #666;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        /* TABLET RESPONSIVE */
+
+        @media (max-width: 1100px) {
+
+            .cards {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+        }
+
+        @media (max-width: 900px) {
+
+            .container {
+                padding: 20px;
+            }
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        /* MOBILE RESPONSIVE */
+
+        @media (max-width: 550px) {
+
+            html,
+            body {
+                width: 100%;
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 100%;
+                padding: 12px;
+            }
+
+            .header,
+            .selection-box {
+                width: 100%;
+                padding: 18px;
+                border-radius: 12px;
+            }
+
+            .header {
+                margin-bottom: 15px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+                line-height: 1.3;
+                word-break: break-word;
+            }
+
+            .header p {
+                font-size: 14px;
+                line-height: 1.5;
+            }
+
+            .back-btn {
+                width: 100%;
+                text-align: center;
+                padding: 12px 15px;
+                margin-top: 15px;
+                min-height: 44px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin-bottom: 15px;
+            }
+
+            .card {
+                width: 100%;
+                padding: 17px 15px;
+                border-radius: 11px;
+            }
+
+            .card h2 {
+                font-size: 25px;
+            }
+
+            .card p {
+                font-size: 13px;
+            }
+
+            .selection-box h2 {
+                font-size: 20px;
+                margin-bottom: 18px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .form-group {
+                width: 100%;
+            }
+
+            .form-group label {
+                font-size: 13px;
+                margin-bottom: 7px;
+            }
+
+            select {
+                width: 100%;
+                padding: 12px;
+                font-size: 14px;
+                min-height: 46px;
+            }
+
+            .student-box {
+                margin-top: 22px;
+                padding-top: 20px;
+            }
+
+            .student-box h3 {
+                font-size: 17px;
+            }
+
+            .view-btn {
+                width: 100%;
+                font-size: 15px;
+                padding: 13px;
+            }
+
+            .empty {
+                padding: 14px 10px;
+                font-size: 13px;
+            }
+
+        }
+
+        /* SMALL MOBILE */
+
+        @media (max-width: 400px) {
+
+            .container {
+                padding: 8px;
+            }
+
+            .header,
+            .selection-box {
+                padding: 15px;
+                border-radius: 10px;
+            }
+
+            .header h1 {
+                font-size: 21px;
+            }
+
+            .header p {
+                font-size: 13px;
+            }
+
+            .back-btn {
+                font-size: 13px;
+                padding: 11px 12px;
+            }
+
+            .card {
+                padding: 15px 10px;
+            }
+
+            .card h2 {
+                font-size: 23px;
+            }
+
+            .card p {
+                font-size: 12px;
+            }
+
+            .selection-box h2 {
+                font-size: 19px;
+            }
+
+            .form-grid {
+                gap: 13px;
+            }
+
+            select {
+                font-size: 13px;
+                padding: 11px;
+            }
+
+            .view-btn {
+                font-size: 14px;
+                padding: 12px;
+            }
+
+            .empty {
+                font-size: 12px;
+                padding: 12px 8px;
+            }
+
+        }
+
+        /* VERY SMALL MOBILE */
+
+        @media (max-width: 320px) {
+
+            .container {
+                padding: 5px;
+            }
+
+            .header,
+            .selection-box {
+                padding: 12px;
+            }
+
+            .header h1 {
+                font-size: 19px;
+            }
+
+            .header p {
+                font-size: 12px;
+            }
+
+            .back-btn {
+                font-size: 12px;
+                min-height: 42px;
+            }
+
+            .card {
+                padding: 13px 8px;
+            }
+
+            .card h2 {
+                font-size: 21px;
+            }
+
+            .card p {
+                font-size: 11px;
+            }
+
+            .selection-box h2 {
+                font-size: 18px;
+            }
+
+            .form-group label {
+                font-size: 12px;
+            }
+
+            select {
+                font-size: 12px;
+                min-height: 43px;
+            }
+
+            .student-box h3 {
+                font-size: 16px;
+            }
+
+            .view-btn {
+                font-size: 13px;
+                min-height: 44px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <h1>Student Reports</h1>
+
+        <p>
+            Select a class and student to view the complete performance report.
+        </p>
+
+        <a href="{{ url_for('dashboard') }}" class="back-btn">
+            ← Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h2>{{ total_students }}</h2>
+
+            <p>Total Students</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>{{ total_achievements }}</h2>
+
+            <p>Achievements</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>{{ total_attendance }}</h2>
+
+            <p>Attendance Records</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>{{ total_assignments }}</h2>
+
+            <p>Assignments</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>{{ total_reports }}</h2>
+
+            <p>Saved Reports</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- SELECTION -->
+
+    <div class="selection-box">
+
+        <h2>Select Student</h2>
+
+        <form method="GET" action="{{ url_for('reports') }}">
+
+            <div class="form-grid">
+
+                <!-- DEPARTMENT -->
+
+                <div class="form-group">
+
+                    <label>Department</label>
+
+                    <select name="department"
+                            onchange="this.form.submit()">
+
+                        <option value="">
+                            Select Department
+                        </option>
+
+                        {% for department in departments %}
+
+                        <option value="{{ department }}"
+                            {% if selected_department == department %}
+                                selected
+                            {% endif %}>
+
+                            {{ department }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <!-- YEAR -->
+
+                <div class="form-group">
+
+                    <label>Year</label>
+
+                    <select name="year"
+                            onchange="this.form.submit()">
+
+                        <option value="">
+                            Select Year
+                        </option>
+
+                        {% for year in years %}
+
+                        <option value="{{ year }}"
+                            {% if selected_year == year %}
+                                selected
+                            {% endif %}>
+
+                            {{ year }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <!-- SECTION -->
+
+                <div class="form-group">
+
+                    <label>Section</label>
+
+                    <select name="section"
+                            onchange="this.form.submit()">
+
+                        <option value="">
+                            Select Section
+                        </option>
+
+                        {% for section in sections %}
+
+                        <option value="{{ section }}"
+                            {% if selected_section == section %}
+                                selected
+                            {% endif %}>
+
+                            Section {{ section }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <!-- CLASS -->
+
+                <div class="form-group">
+
+                    <label>Class</label>
+
+                    <select name="class_name"
+                            onchange="this.form.submit()">
+
+                        <option value="">
+                            Select Class
+                        </option>
+
+                        {% for class_name in class_names %}
+
+                        <option value="{{ class_name }}"
+                            {% if selected_class == class_name %}
+                                selected
+                            {% endif %}>
+
+                            {{ class_name }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- STUDENT -->
+
+            {% if selected_class %}
+
+            <div class="student-box">
+
+                <h3>Select Student</h3>
+
+                {% if report_students %}
+
+                <select name="register_number">
+
+                    <option value="">
+                        Select Student
+                    </option>
+
+                    {% for student in report_students %}
+
+                    <option value="{{ student.register_number }}">
+
+                        {{ student.register_number }} - {{ student.name }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+
+                <button type="submit" class="view-btn">
+
+                    View Student Report
+
+                </button>
+
+                {% else %}
+
+                <div class="empty">
+
+                    No students found for this class.
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+            {% endif %}
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
